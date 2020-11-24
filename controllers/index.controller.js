@@ -1,15 +1,16 @@
 const indexCtrl = {};
-var profile = require('../helpers/seeds/profile')
+var profile
 var _ = require('lodash');
 
 indexCtrl.renderIndex = (req, res) => {
-  var permission
   if (process.env.NODE_ENV =='development'){
-    var rol='Administrador'
-    permission=_.filter(profile,{profile:rol,fatherMenu:'menu'})    
+    profile = require('../helpers/seeds/profile')
+    var rol='Aliado'
   } else {
-    permission=req.app.locals.profile
+    profile = req.app.locals.profile
+    rol=req.app.locals.rol
   }
+  var permission=_.filter(profile,{profile:rol,fatherMenu:'menu'})  
   var perfil={}
   permission.forEach(function(val){
     perfil[val.keyMenu]={

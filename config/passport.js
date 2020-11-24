@@ -16,8 +16,9 @@ passport.use('login', new LocalStrategy({
   } else {    
     user = (await userService.customClaim()).claims
     if (user.profile != undefined) {
+      req.app.locals.rol=user.profile
       var data=[]
-      const query=await generalCrud._getRowsByParam('profile',user.profile,'==')
+      const query=await generalCrud._getAll()
       if (query.success) {
         query.data.forEach(doc => {
           let document = doc.data()
