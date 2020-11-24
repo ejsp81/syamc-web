@@ -1,0 +1,27 @@
+include ../partials/forms/input
+include ../partials/forms/select2
+include ../helper/rellena
+.container.col-md-12
+  +input({type:'hidden'},{name:'id',id:'id'})
+  .form-row
+    +input({type:'text',label:true,column:'4'},{name:'businessName',placeholder:'Nombre del Establecimiento',id:'businessName',required:''})
+    +input({type:'text',label:true,column:'3'},{name:'address',required:'',id:'address'})
+    +input({type:'text',label:true,column:'2'},{name:'phone1',required:'',id:'phone1'})
+    +input({type:'text',label:true,column:'2'},{name:'phone2',required:'',id:'phone2'})    
+  .form-row
+    +input({type:'text',label:true,column:'2'},{name:'celphon1',required:'',id:'celphon1'})
+    +input({type:'text',label:true,column:'2'},{name:'celphon2',required:'',id:'celphon2'})
+    +input({type:'text',label:true,column:'3'},{name:'email',required:'',id:'email'})
+    +input({type:'text',label:true,column:'4'},{name:'manager',placeholder:'Gerente',id:'manager',required:''})
+  .form-row
+    +input({type:'select',label:true,column:'6',data:businessActivity},{name:'businessActivity',required:'',multiple:'','data-placeholder':'Seleccione un Item'})
+    +input({type:'select',label:true,column:'5',data:serviceProvide},{name:'serviceProvide',required:'',multiple:'','data-placeholder':'Seleccione un Item'})
+  .form-row
+    +input({type:'text',label:true,column:'6'},{name:'description',required:'',id:'description'})
+    +input({type:'checkbox',label:'Cuenta de Usuario',column:'5'},{value:'hola',name:'userAccount',required:'',id:'userAccount',disabled:''})  
+  - var buttonClass=['btn-lg', 'btn-primary', 'text-center'];
+  - var titleButton=typeof(rowData) != 'undefined'?'Actualizar':'Registrar'
+  +boton({type:'submit',clases:buttonClass},{title:titleButton,style:'margin-right:5px'})
+  a.btn.btn-primary.btn-lg(href=urlPage role='button') Cancelar
+  if typeof(rowData) != 'undefined'
+    +rellena(rowData)

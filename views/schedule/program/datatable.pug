@@ -1,0 +1,52 @@
+mixin datatable() 
+  script.
+    var succ={
+      success:function(data){
+          alert('Hola');
+      }
+    }
+  -
+    var settingDataTable={
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url:urlPage+'/generate',
+        type: 'POST',
+        dataSrc: '',
+      }, 
+      columnDefs: [
+        {
+          orderable: false,
+          targets: 1
+        },
+        {
+          targets:[ 2, 3 ],
+          visible: false,
+          searchable: false
+        },
+      ], 
+      destroy:true,
+      searching:false,
+      info:false,
+      paging:false,
+      autoWidth:true
+    }
+  include ../../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'table'+nameTabla,
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      initDatatable:false,
+      initDatatableSetting:{
+        columnDefs: [
+          {
+            targets: [ 2, 3 ],
+            visible: false,
+            searchable: false
+          },
+        ]
+      }
+    },
+    fieldAndTitle
+  )

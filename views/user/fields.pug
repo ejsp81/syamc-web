@@ -1,0 +1,20 @@
+include ../partials/forms/input
+include ../partials/forms/select2
+include ../helper/rellena
+.container.col-md-8
+  +input({type:'hidden'},{name:'uid',id:'uid'})
+  +input({type:'hidden'},{name:'idBD',id:'idBD'})
+  .form-row
+    +input({type:'text',label:'Nombre',column:'6'},{name:'displayName',placeholder:'Nombre del usuario',id:'displayName',required:''})
+    +input({type:'email',label:'Correo Electronico',hide:'',column:'6'},{name:'email',placeholder:'Email',id:'email',required:''})    
+  .form-row
+    if rowData == undefined 
+      +input({type:'password',label:'Contraseña',hide:'',column:'6'},{name:'password',placeholder:'Contraseña',id:'password',required:''})
+    +input({type:'select',label:true,column:'6',data:{Administrador:'Administrador',Aliado:'Aliado',Aliado_cita:'Aliado_cita'}},{name:'profile',id:'profile',required:'','data-placeholder':'Seleccione un Item'})
+    
+  - var buttonClass=['btn-lg', 'btn-primary', 'text-center'];
+  - var titleButton=typeof(rowData) != 'undefined'?'Actualizar':'Registrar'
+  +boton({type:'submit',clases:buttonClass},{title:titleButton,style:'margin-right:5px'})
+  a.btn.btn-primary.btn-lg(href=urlReturn role='button') Cancelar
+  if typeof(rowData) != 'undefined'
+    +rellena(rowData)

@@ -1,0 +1,44 @@
+mixin function(tableName,rowCounter,actionButton)
+  - var id='id'
+  if actionButton != undefined
+    - id=actionButton.fieldId==undefined?'id':actionButton.fieldId
+  if rowCounter == true
+    script.
+      $(document).ready(function() {
+        $('##{tableName}').DataTable().on( 'order.dt search.dt', function () {
+          table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+          });
+        }).draw();
+      })
+  if actionButton != undefined
+    script.
+      $(document).ready(function() {
+        $('##{tableName} tbody').on( 'click', 'button.editRow', function () { 
+          var rowSelector;
+          var li = $(this).closest('li');         
+          if ( li.length ) {
+          rowSelector = table.cell( li ).index().row;
+          }
+          else {
+            rowSelector =  $(this).closest('tr');
+          }
+          var data = table.row( rowSelector ).data();
+          window.location.href=`#{actionButton.urlEdit}${data['#{id}']}`
+        });
+
+        $('##{tableName} tbody').on( 'click', 'button.deleteRow', function () { 
+          var rowSelector;
+          var li = $(this).closest('li');         
+          if ( li.length ) {
+          rowSelector = table.cell( li ).index().row;
+          }
+          else {
+            rowSelector =  $(this).closest('tr');
+          }
+          var data = table.row( rowSelector ).data();
+          console.log(data)
+          $("#infoDelete").text(`${data['#{actionButton.rowReference}']}?`);
+          $("#idRow").val(data['#{id}']);
+        });
+      })

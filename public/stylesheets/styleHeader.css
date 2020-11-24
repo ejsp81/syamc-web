@@ -1,0 +1,11 @@
+html, body { width: 100%; height: 99%;   }
+.envoltura { min-height: 25%;   }
+.header {   border-bottom: 5px solid #9392e9; height: 65px; box-sizing:border-box;}
+.logosHeader{
+  max-height: 50px; max-width: 60px; margin-top:5px;
+}
+.currentUser{
+  color: #f1211a; font-size: 14px;margin-left:7px
+}
+
+.portada{background-image: url("/images/fondo.jpg");background-repeat: no-repeat;background-size: cover;}

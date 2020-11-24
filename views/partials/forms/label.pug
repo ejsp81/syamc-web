@@ -1,0 +1,8 @@
+mixin label(name,label,show)
+  if label ==true
+    label.control-label.font-weight-bold(for=name) #{fieldAndTitle[name]}
+  else if label !=undefined
+    if typeof label == 'string'
+      label.control-label.font-weight-bold(for=pAttributes.name) #{label}
+  else 
+    label.control-label.font-weight-bold(for=pAttributes.name) &nbsp

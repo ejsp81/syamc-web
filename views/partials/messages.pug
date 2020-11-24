@@ -1,0 +1,11 @@
+
+if messages.success
+  .alert.alert-success.alert-dismissible.fade.show(role='alert') #{messages.success}
+    button.close(type='button', data-dismiss='alert', aria-label='Close')
+      span(aria-hidden='true') ×
+
+#error_msg
+  if error_msg
+    .alert.alert-danger.alert-dismissible.fade.show(role='alert') #{ error_msg[0] }
+      button.close(type='button', data-dismiss='alert', aria-label='Close')
+        span(aria-hidden='true') ×

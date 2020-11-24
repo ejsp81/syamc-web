@@ -1,0 +1,62 @@
+include button
+include select2
+include date
+include file
+mixin input(options,pAttributes)  
+  if options.validationMessage == undefined 
+    - options.validationMessage=""
+  - var available=true
+  - attributes.hide = options.hide
+  div(class=options.column?'col-'+options.column:'col-12')&attributes(attributes)    
+    .form-group
+      if options.type == 'hidden'
+        input.form-control(type=options.type)&attributes(pAttributes)
+      else 
+        include label
+        case options.type
+          when 'email'
+            - pAttributes.maxlength='320'
+          when 'checkbox'
+            - available=false
+            .form-check
+              input.form-check-input(type=options.type value='' ,name=pAttributes.name)&attributes(pAttributes)
+              .invalid-feedback #{options.validationMessage}
+              label.form-check-label.control-label.font-weight-bold.checkbox-left-label(for=pAttributes.name) #{options.label}
+          when 'color'
+            br
+            - pAttributes.class='input-color'
+          when 'date'
+            - available=false
+            +label(pAttributes.name,options.label)
+            +date(options,pAttributes)
+          when 'icon'
+            - available=false
+            +label(pAttributes.name,options.label)
+              script(src='../scripts/font-awesome/fontawesome-iconpicker.min.js')
+              script. 
+                var inputIcon = $('.icp');
+                if(inputIcon.val()==''){
+                  inputIcon.val('fas fa-comment-alt');
+                }
+                inputIcon.iconpicker();
+            .input-group
+              input.form-control.icp(type=options.type)&attributes(pAttributes)
+              span.input-group-addon
+          when 'number'
+            - pAttributes.min=0
+          when 'textarea'
+            - pAttributes.size='20x3'
+            - pAttributes.style={resize: 'vertical'}
+          when 'select'
+            - available=false
+            +label(pAttributes.name,options.label)
+            +select(options,pAttributes)
+          when 'file'
+            - available=false
+            +label(pAttributes.name,options.label,false)
+            +file(options,pAttributes)    
+        if available
+          +label(pAttributes.name,options.label)
+          input.form-control(type=options.type)&attributes(pAttributes)
+          .invalid-feedback #{options.validationMessage}
+          

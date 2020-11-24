@@ -1,0 +1,10 @@
+mixin card_index(info)
+  .card      
+    .card-header.text-white.bg-danger.text-center        
+      ul.nav.nav-pills.w-100          
+        li
+          h3 #{title}
+        if view=='index'
+          li.nav-pill.ml-auto
+            a.nav-link.active(href=info.urlCreate) Crear
+    .card-body

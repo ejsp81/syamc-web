@@ -1,0 +1,53 @@
+mixin datatable()
+  script.
+    var customColumnDefs=[
+      {
+        targets:3,
+        render:function(data, type, row, meta){
+          return !row.id?'Activo':'Inactivo'
+        },
+        className: "text-center",
+      },
+      {
+        targets:4,
+        render:function(data, type, row, meta){
+          return data!=null?data.profile:''
+        },
+        className: "text-center",
+      }
+    ]
+  -
+    fieldAndTitle.displayName={
+      default:"<i class='text-danger'>Pendiente Asignar Nombre</i>",
+      val:fieldAndTitle.displayName
+    }
+    var settingDataTable={
+    ajax: {
+      url:urlPage+'/get_users',
+      type: 'POST',
+      dataSrc: ''
+    }, 
+    "scrollX": true,
+    order: [[ 1, 'asc' ]],
+    lengthMenu:[10, 30, 50,100],
+    pageLength:10,
+    initComplete: function(settings) {
+            $('#example').colResizable({liveDrag:true});
+        }
+    }
+    
+  include ../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'tableUser',
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      rowCounter:true,
+      actionButton:{
+        urlEdit:urlPage+'/render/edit/',
+        rowReference:'businessName',
+        fieldId:'uid'
+      }
+    },
+    fieldAndTitle
+  )

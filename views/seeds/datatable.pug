@@ -1,0 +1,56 @@
+mixin datatable()
+  script.
+    var customColumnDefs=[
+      {
+        targets:-1,
+        render: function (data, type, row, meta ) {
+          return  "<button class='btn btn-success'>Actualizar</button>"
+        },
+        "className": "text-center",
+      }
+    ]
+  -
+    var settingDataTable={
+       processing: true,
+      ajax: {
+        url: urlPage+'/get_all',
+        type: 'POST',
+        dataSrc: ''
+      }, 
+      "scrollX": true,
+      order: [[ 1, 'asc' ]],
+      searching:false,
+      info:false,
+      paging:false
+    }
+    
+  include ../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'tableSeed',
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      rowCounter:true,
+    },
+    fieldAndTitle
+  ) 
+  script.
+    $('#tableSeed tbody').on( 'click', 'button', function () {
+      var rowSelector;
+      var li = $(this).closest('li');         
+      if ( li.length ) {
+        rowSelector = table.cell( li ).index().row;
+      }
+      else {
+        rowSelector =  $(this).closest('tr');
+      }
+      var data = table.row( rowSelector ).data();
+      console.log(data)
+      fetch('/seeds/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+    });

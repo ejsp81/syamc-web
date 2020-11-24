@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+  include ../partials/menu
+  
+  .container#containerTabla
+    br
+    table#myTable.table
+      thead
+        tr
+          th Fecha
+          th Usuario
+          th Placa
+          th Tarjeta de Propiedad
+      tbody
+      script.
+        getData();      
+        function addRow(data){
+          $('#myTable > tbody').append(`
+            <tr>
+            <td>${data.date}</td>          
+            <td>${data.infoSchedule.nameUser}</td>
+            <td>${data.infoSchedule.licencePlate}</td>
+            <td><img src='${data.infoSchedule.urlLicencePlate}' height='60px' width='80px'/></td>
+            </tr>`);
+        }
+        function getData(){
+          $.post('/schedule/getAppointment', (data) => {
+            if(data.length==0){
+              $('#containerTabla').append('No hay citas agendadas')
+            }else{
+              data.forEach(addRow);
+            }          
+          });
+        }  
+
+  hr
+  footer
+    .container(align='center')
+      | Serivicio y Asistencia para Motos y Carros

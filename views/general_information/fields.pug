@@ -1,0 +1,16 @@
+include ../partials/forms/input
+include ../partials/forms/select2
+include ../helper/rellena
+.container.col-md-8
+  +input({type:'hidden'},{name:'id',id:'id'})
+  .form-row
+    +input({type:'text',label:true,column:'6'},{name:'product',placeholder:'Descripcion del Producto',id:'product',required:''})
+    +input({type:'number',label:true,column:'6'},{name:'price',placeholder:'Precio',id:'price',required:''})
+  .form-row
+    +input({type:'date',label:true,column:'6',showHelp:'DD/MM/YYYY'},{name:'lastUpdate',required:''})    
+  - var buttonClass=['btn-lg', 'btn-primary', 'text-center'];
+  - var titleButton=typeof(rowData) != 'undefined'?'Actualizar':'Registrar'
+  +boton({type:'submit',clases:buttonClass},{title:titleButton,style:'margin-right:5px'})
+  a.btn.btn-primary.btn-lg(href=urlPage role='button') Cancelar
+  if typeof(rowData) != 'undefined'
+    +rellena(rowData)

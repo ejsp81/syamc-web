@@ -1,0 +1,28 @@
+extends layout
+  
+block content
+  #{messages.success}
+  include partials/errors  
+  include partials/messages  
+  div.text-center
+    br
+    br
+    br
+    img.mb-4(src='/images/inicio_sesion.png' alt='Aliados'  )
+    #errorLog
+      if  errorLog 
+        p.text-danger Error!!! #{errorLog}
+    - var h1Classes = ['h3', 'mb-3', 'font-weight-normal']
+    h1(class=h1Classes) Inicio de Sesion
+  include partials/forms/input
+  form.form-signin(method="POST" action="/users/login")
+    .col-md-12.col-md-offset-2
+      //-input email
+      +input({type:'email',label:'Correo Electronico',hide:'',column:'12'},{name:'email',placeholder:'Email',id:'email',required:'',value:'ejsp81@hotmail.com'})
+        
+      //-input password
+      +input({type:'password',label:'Contraseña',hide:'',column:'12'},{name:'password',placeholder:'Contraseña',id:'password',required:'',value:'COTONIELA'})
+    
+      //-signIn button
+      - var buttonClass=['btn-lg', 'btn-primary', 'btn-block','text-center'];
+      +boton({type:'submit',clases:buttonClass},{title:'Iniciar Sesion',name:'submit','data-tooltip':'Inicio de Sesion'})

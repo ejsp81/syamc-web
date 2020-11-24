@@ -1,0 +1,13 @@
+include ../partials/forms/input
+include ../partials/forms/select2
+include ../helper/rellena
+.container.col-md-8
+  +input({type:'hidden'},{name:'id',id:'id',value:idParameter})
+  .form-row
+    +input({type:'text',label:true,column:'6'},{name:'field',placeholder:'Nombre del Parametro',id:'field',required:''})
+  - var buttonClass=['btn-lg', 'btn-primary', 'text-center'];
+  - var titleButton=typeof(rowData) != 'undefined'?'Actualizar':'Registrar'
+  +boton({type:'submit',clases:buttonClass},{title:titleButton,style:'margin-right:5px'})
+  a.btn.btn-primary.btn-lg(href=urlPage role='button') Cancelar
+  if typeof(rowData) != 'undefined'
+    +rellena(rowData)

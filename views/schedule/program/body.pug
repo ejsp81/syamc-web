@@ -1,0 +1,172 @@
+extends ../../layout
+block content
+  include ../../partials/menu
+  main.p-5
+    include ../../partials/forms/input
+    include ../../partials/forms/select2
+    form.col-md-offset-2.needs-validation#formSchedule(ng-app="setAgenda" ng-controller="setSelectBreak" novalidate='')
+      .container.col-md-12
+        .form-row
+          +input({type:'date',label:'Fecha Inicial',column:'2',validationMessage:'El campo es requerido',showHelp:'DD/MM/YYYY'},{name:'firstDate',required:''}) 
+          +input({type:'date',label:'Fecha Final',column:'2',validationMessage:'El campo es requerido',showHelp:'DD/MM/YYYY',setDatatable:{useCurrent: false}},{name:'lastDate',required:''}) 
+          +input({type:'number',label:'Intervalo',column:'2',validationMessage:'El campo es requerido'},{min:"5", max:"120",name:'intervalo',placeholder:'Intervalo',id:'intervalo',required:'','ng-model':"intervalo",'ng-change':"update()"})
+          +input({type:'date',label:'Hora Inicial',column:'2',validationMessage:'El campo es requerido',clock:'',defaultDate:false,setDatatable:{format: 'HH:mm'}},{name:'firstHour',required:'','ng-model':"first"}) 
+          +input({type:'date',label:'Hora Final',column:'2',validationMessage:'El campo es requerido',clock:'',defaultDate:false,setDatatable:{format:'HH:mm'}},{name:'lastHour',required:'','ng-model':"second",'ng-change':"update()"}) 
+          +input({type:'select',label:'Descanso',column:'2'},{name:'selectBreak',multiple:'','ui-select2':"groupSetup"})
+        - var buttonClass=['btn-lg', 'btn-primary', 'text-center','generate'];
+        +boton({type:'submit',clases:buttonClass},{title:'Generar',id:'btnRegister',style:'margin-right:5px'})
+        - var buttonClass2=['btn-lg', 'btn-primary', 'text-center','save'];
+        +boton({type:'button',clases:buttonClass2},{title:'Confirmar',name:'btnConfirm',id:'btnConfirm',disabled:''})
+    include datatable
+    .container.text-center#content
+    +datatable()
+  script.
+    $(document).ready(function(){
+      function convertDate(date) {
+        var array = date.split('/')
+        var parseDate = new Date(`${array[1]}/${array[0]}/${array[2]}`)
+        return moment(parseDate)
+      }
+      $("#datetimepicker_firstDate").on("dp.change", function (e) {
+        $('#datetimepicker_lastDate').data("DateTimePicker").minDate(e.date);
+      });
+      $("#datetimepicker_lastDate").on("dp.change", function (e) {
+        $('#datetimepicker_firstDate').data("DateTimePicker").maxDate(e.date);
+      });
+      function generateSchedule(showAvailable){        
+        var firstDate =convertDate($("#datetimepicker_firstDate").find("input").val())
+        var lastDate =convertDate($("#datetimepicker_lastDate").find("input").val())
+        var dias=lastDate.diff(firstDate, 'days')+1
+        var dailyAppointmentsButton="";
+        var dailyAppointmentsArray=[];
+        $("select#selectBreak option").map(function() {  
+          var breakVal= $('#selectBreak').val()
+          var currentVal=$(this).val()
+          if( currentVal!='?' && !breakVal.includes(currentVal) ){
+            dailyAppointmentsButton=dailyAppointmentsButton+`<button class='getName btn btn-info'>${currentVal}</button> `
+            dailyAppointmentsArray.push(currentVal)
+          }          
+        }).get();
+        var data=[]
+        var a=firstDate.clone()
+        for (var i = 1; i <= dias; i++) {
+          data.push({date:a.format('DD/MM/YYYY'),dailyAppointmentsButton,dailyAppointmentsArray})
+          a.add(1,'days')
+        }
+        config.ajax['data']={
+          firstDate:firstDate.format('DD/MM/YYYY'),
+          lastDate:lastDate.format('DD/MM/YYYY'),
+          data:JSON.stringify(data)
+        }
+        config.ajax['complete']= function (data) {
+          var arr=data.responseJSON
+          const available = arr.filter(character => character.assign === true);
+          if(available.length>0){
+            $("#btnConfirm").prop('disabled', false);
+          }else{
+            if(showAvailable == undefined){
+              messageToast({
+                type:'warning',
+                message:'No se pueden parametrizar agendas en el rango de fecha seleccionado',
+                title:'Atencion!!',
+              })  
+            }
+            
+            $("#btnConfirm").prop('disabled', true);
+          }                   
+        } 
+        initializeTable()  
+      }
+
+      $("button.save").click(async function(){
+        var schedule=[] 
+        $('#content').html('<div class="loading"><img src="/images/ajax-loader.gif" alt="loading" /><br/>Generando Agenda...</div>');
+        table.rows().every(function(){
+          var data=this.data()
+          if (data.assign){
+            schedule.push({
+              date:data.date,
+              data:data.data
+            })          
+          }
+        });
+        fetch("/schedule/save",{
+          method: "POST",
+          body:JSON.stringify({data:schedule}),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){
+          if(data.success){
+            messageToast({
+              type:'success',
+              message:'Agenda programada exitosamente',
+              title:'Exito'
+            })  
+            generateSchedule(false)
+            $('#content').fadeIn(1000).html('');              
+          }else{
+             messageToast({
+              type:'error',
+              message:'Ha ocurrido un error al programar la Agenda',
+              title:'Error'
+            })
+          $('#content').fadeIn(1000).html('');   
+          }
+        })
+
+      });  
+     
+      $(function () {
+        $("#btnRegister").on("click", function (e) {
+            var form = $("#formSchedule")[0];
+            var isValid = form.checkValidity();
+            if (!isValid) {
+                 messageToast({
+                  type:'warning',
+                  message:'Registra los campos que son requeridos y que corresponda al tipo de dato',
+                  title:'Atencion!!',
+                })                 
+                e.preventDefault();
+                e.stopPropagation();
+            }else{
+              generateSchedule()
+             
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
+        });
+      }); 
+      
+    });
+
+
+    var myApp = angular.module('setAgenda', []);
+    myApp.controller('setSelectBreak', function($scope) {
+      $scope.first='07:00';
+      $scope.second='18:00';
+      $scope.groupSetup = {
+        multiple: true,
+        formatSearching: 'Searching the group...',
+        formatNoMatches: 'No group found'
+      };
+      $scope.update = function() {        
+        $scope.groups=[];
+        var a = moment($scope.first, 'H:mm'); //now
+        var b = moment($scope.second, 'H:mm');
+        var minutes = b.diff(a, 'minutes');
+        var intervalo=$scope.intervalo;
+        var cantEspacios = minutes / intervalo;
+        if(b.isValid() && intervalo>=30){
+          for (var i = 0; i < cantEspacios; i++) {
+            var val=a.format('HH:mm');
+            var item=`${a.format('HH:mm')}-${a.add(intervalo,'minutes').format('HH:mm')}`;
+            $scope.groups.push({id: val, label: item});
+          }
+        }
+      };
+    });
+  block append scripts
+    script(type="text/javascript" src='/javascripts/messageToastr.js')  

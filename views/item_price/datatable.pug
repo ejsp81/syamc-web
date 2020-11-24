@@ -1,0 +1,30 @@
+mixin datatable()  
+  -
+    var settingDataTable={
+    ajax: {
+      url:urlPage+'/getAll',
+      type: 'POST',
+      dataSrc: ''
+    },
+    columnDefs: [
+      {
+        "targets": 2,
+        "className": "text-center",
+      },
+    ],
+    order: [[ 1, 'asc' ]],
+    }
+  include ../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'table'+nameTabla,
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      rowCounter:true,
+      actionButton:{
+        urlEdit:urlPage+'/render/edit/',
+        rowReference:'product',
+      }
+    },
+    fieldAndTitle
+  )

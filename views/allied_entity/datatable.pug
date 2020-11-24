@@ -1,0 +1,48 @@
+mixin datatable()
+  script.
+    var customColumnDefs=[
+      {
+        targets:1,
+        render: function ( data ) {
+          return data==null?'':data.toString();
+        }
+      },
+      {
+        targets:3,
+        data:'id',
+        render: function (data, type, row, meta ) {
+          return (data==null || !data)?`<a href="/allied_entity/render/createUser/${row.id}" class="nav-link">Asignar</a>`:`<a href="#about/${row.id}" class="nav-link">Ver</a>`;
+        },
+        "className": "text-center",
+      }
+    ]
+  -
+    var settingDataTable={
+    ajax: {
+      url:urlPage+'/getAll',
+      type: 'POST',
+      dataSrc: ''
+    }, 
+    "scrollX": true,
+    order: [[ 1, 'asc' ]],
+    lengthMenu:[10, 30, 50,100],
+    pageLength:10,
+    initComplete: function(settings) {
+            $('#example').colResizable({liveDrag:true});
+        }
+    }
+    
+  include ../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'table'+nameTabla,
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      rowCounter:true,
+      actionButton:{
+        urlEdit:urlPage+'/render/edit/',
+        rowReference:'businessName'
+      }
+    },
+    fieldAndTitle
+  )

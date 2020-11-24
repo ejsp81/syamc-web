@@ -1,0 +1,18 @@
+mixin modal_delete(options)
+  #modalDelete.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Eliminar Producto
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body                  
+          p Esta seguro de eliminar el item 
+            strong#infoDelete
+        .modal-footer
+          form.form-horizontal(method="POST" action=options.url)
+            +input({type:'hidden'},{name:'idRow',id:'idRow',value:''})
+            - var buttonClass=['btn-secondary', 'text-center'];
+            +boton({type:'button',clases:buttonClass},{title:'Cancelar','data-dismiss':'modal',style:'margin-right:5px'})
+            - var buttonClass=[ 'btn-primary', 'text-center'];
+            +boton({type:'submit',clases:buttonClass},{title:'Eliminar',style:'margin-right:5px'})    

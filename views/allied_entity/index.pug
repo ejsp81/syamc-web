@@ -1,0 +1,29 @@
+extends ../layout
+block content
+  include ../partials/menu
+  include ../partials/card_index
+  main.p-5
+    .card      
+      .card-header.text-white.bg-danger.text-center        
+        ul.nav.nav-pills.w-100          
+          li
+            h3 #{title}
+          if view=='index'
+            li.nav-pill.ml-auto
+              a.nav-link.active(href=urlPage+'/render/create') Crear
+      .card-body
+        if view=='index'
+          - var tableName='tableAlliedEntity'
+          include ../partials/forms/input
+          include ../partials/modal_delete
+          include datatable
+          +modal_delete({url:urlPage+"/delete"})               
+          +datatable()
+        else if  view=='create'
+          include create
+        else if  view=='edit'
+          include edit
+        else if  view=='createUser'
+          include ../user/create
+        else
+          include ../partials/page_not_found

@@ -1,0 +1,91 @@
+include functions
+mixin config(setting,settingDataTable)
+  -
+    var initDefault={
+      searching:false,
+      info:false,
+      paging:false
+    }
+    var initialize=true;
+    var basicConfig={
+      responsive:true,
+      processing: true,  
+      lengthMenu:settingDataTable.lengthMenu?settingDataTable.lengthMenu:[5, 10, 25, 50],
+      pageLength:settingDataTable.pageLength?settingDataTable.pageLength:5,
+      language: {
+        "decimal": "",
+        "emptyTable": "Sin Informacion para mostrar",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+      },   
+    }
+    var rowCounter={
+      "searchable": false,
+      "orderable": false,
+      "targets": 0
+    }
+    var actionButton={
+      "defaultContent":"<button class='btn btn-success editRow' style='margin-right:5px'>Editar</button> <button class='btn btn-danger deleteRow' data-toggle='modal' data-target='#modalDelete'>Eliminar</button>",
+      "className": "justify-content-center text-center"
+    }
+  if setting.rowCounter == true  
+    - settingDataTable.columns =[{ data: null}].concat(settingDataTable.columns)
+    if settingDataTable.columnDefs == undefined         
+      - settingDataTable.columnDefs =[rowCounter] 
+    else  
+      - settingDataTable.columnDefs.push(rowCounter)
+  if setting.actionButton != undefined
+    - settingDataTable.columns.push(actionButton)
+  if setting.initDatatable != undefined
+    - initialize=false
+    if setting.initDatatableSetting != undefined
+      - initDefault=Object.assign(basicConfig,initDefault,setting.initDatatableSetting)
+
+  script.
+    var config=!{JSON.stringify(settingDataTable)}
+    
+    if(config.columns != undefined){
+      var variable=config.columns
+    }
+    if (typeof customColumnDefs != 'undefined'){
+      if (typeof config.columnDefs == 'undefined'){
+        customColumnDefs.forEach(function(value){
+          config.columnDefs=[value]
+        })
+      }else{
+        customColumnDefs.forEach(function(value){
+          config.columnDefs.push(value)
+        })        
+      }       
+    }      
+    var table;  
+    var intialize= !{JSON.stringify(initialize)}
+    if (intialize){
+      initializeTable()
+    }else{
+       $(document).ready(function() {
+        table = $('##{setting.tableName}').DataTable(!{JSON.stringify(initDefault)}); 
+      });
+    }
+    function initializeTable(){      
+      $(document).ready(function() {
+        table = $('##{setting.tableName}').DataTable(
+          $.extend(!{JSON.stringify(basicConfig)},config)
+        ); 
+      });
+    }    
+  +function(setting.tableName,setting.rowCounter,setting.actionButton)

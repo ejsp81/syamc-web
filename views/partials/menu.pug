@@ -1,0 +1,44 @@
+.envoltura
+  .fixed-top
+    .d-flex.justify-content-between.text-center.header.portada
+      img.logosHeader#Image1(src='https://firebasestorage.googleapis.com/v0/b/syamyc-4e715.appspot.com/o/imagesMenu%2Ficono-cda.png?alt=media&token=9b262c66-1822-4ee5-8a23-96450e7d45fa' style="margin-left:20px")
+      .row(style="margin-right:10px")
+        img.img-rounded.logosHeader#Image1(src='/images/logo_aliado.png' )
+        .d-flex.flex-column.justify-content-end.align-items-start.currentUser
+          if user != undefined
+            span #{user.name}
+            span #{user.profile}
+    nav.navbar.navbar-expand-sm.bg-danger.navbar-dark
+      a.navbar-brand(href='/') Inicio
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          if permission.agend_citas != undefined
+            li.nav-item.dropdown        
+              a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | #{permission.agend_citas.menu}
+              .dropdown-menu(aria-labelledby='navbarDropdown')
+                each val, key in permission.agend_citas.submenu
+                  a.dropdown-item(href=val.rout) #{val.valueMenu}
+                .dropdown-divider
+          if permission.mante_gener != undefined
+            li.nav-item.dropdown        
+              a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | #{permission.mante_gener.menu}
+              .dropdown-menu(aria-labelledby='navbarDropdown')
+                each val, key in permission.mante_gener.submenu
+                  a.dropdown-item(href=val.rout) #{val.valueMenu}
+                .dropdown-divider
+          if permission.admin_siste != undefined
+            li.nav-item.dropdown        
+              a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | #{permission.admin_siste.menu}
+              .dropdown-menu(aria-labelledby='navbarDropdown')
+                each val, key in permission.admin_siste.submenu
+                  a.dropdown-item(href=val.rout) #{val.valueMenu}
+                .dropdown-divider
+          li.nav-item
+            a.nav-link.bg-blue(href='/users/logout') Cerrar Sesion
+    include messages
+    include errors 

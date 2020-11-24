@@ -1,0 +1,43 @@
+mixin datatable() 
+  script.
+    var customColumnDefs=[
+      {
+        targets:2,
+        render: function ( data ) {
+          return data==null?'':data.toString();
+        }
+      },
+    ]
+  -
+    var settingDataTable={
+    ajax: {
+      url:urlPage+'/getAll',
+      type: 'POST',
+      dataSrc: ''
+    },
+    columnDefs: [
+      {
+        "targets": 1,
+        "visible": false,
+        "searchable": false
+      },
+    ],
+    order: [[ 1, 'asc' ]],
+    destroy:true,
+    }
+  include ../partials/datatable/datatable
+  +datatableglobal(
+    {
+      tableName:'table'+nameTabla,
+      settingDataTable:settingDataTable,
+      titleDataTable:titleDataTable,
+      rowCounter:true,
+      actionButton:{
+        urlEdit:urlPage+'/render/edit/',
+        rowReference:'field',
+      },
+      initDatatable:false,
+      
+    },
+    fieldAndTitle
+  )

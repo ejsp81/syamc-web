@@ -1,0 +1,16 @@
+extends ../layout
+block content
+  include ../partials/menu
+  main.p-5
+    .card      
+      .card-header.text-white.bg-danger.text-center        
+        ul.nav.nav-pills.w-100          
+          li
+            h3 #{title}
+      .card-body
+        if view=='index'
+          - var tableName='tableUser'
+          include datatable           
+          +datatable()
+        else
+          include ../partials/page_not_found

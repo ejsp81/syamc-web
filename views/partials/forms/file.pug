@@ -1,0 +1,11 @@
+mixin file(options,pAttributes)
+  .custom-file.pmd-custom-file-outline
+    input.custom-file-input(type=options.type,id=pAttributes.name)&attributes(pAttributes)
+    label.custom-file-label(for=pAttributes.name) #{options.label}
+    script.
+      $(document).ready(function() {
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });                
+      })       

@@ -1,0 +1,26 @@
+mixin select(options,pAttributes)
+  select.form-control.full-width(id=pAttributes.name)&attributes(pAttributes)  
+    if options.data != undefined
+      each val, key in options.data
+        option(value=key) #{val}
+    else
+      option(ng-repeat="group in groups" value='{{group.id}}') {{group.label}}
+  .invalid-feedback #{options.validationMessage}
+  script.
+    $(document).ready(function() {
+      $('##{pAttributes.name}').select2({
+        theme: "bootstrap",
+        closeOnSelect: true,
+        placeholder: "Seleccione un Item",
+        width: '100%'
+      });
+    });
+  block append head
+    link(rel='stylesheet' href='/css/select2.min.css') 
+    link(rel='stylesheet' href='/css/select2-bootstrap.min.css')  
+
+  block append scripts
+    script(src='/js/select2.min.js')
+    
+        
+            

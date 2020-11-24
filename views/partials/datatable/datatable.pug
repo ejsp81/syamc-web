@@ -1,0 +1,39 @@
+mixin datatableglobal(setting,columns)  
+  include config
+  if setting.settingDataTable.columns == undefined
+    - setting.settingDataTable.columns=[]
+    each val, key in columns 
+      - setting.settingDataTable.columns.push({data:key,"defaultContent": val.default!=undefined?val.default:''})
+  h2 #{setting.titleDataTable}
+  .col-md-12
+    table.table.table-striped.table-bordered.display.nowrap.stripe.row-border.order-column(id=setting.tableName,cellspacing="0" width="100%")
+      thead
+        tr      
+          if setting.rowCounter==true
+            th #
+          each val, key in columns
+            - var value=   val.default!=undefined?val.val:val     
+            th(scope='col') #{value}
+          if setting.actionButton != undefined
+            th(scope='col') Acciones
+      tbody 
+      tfoot
+        tr
+          if setting.rowCounter==true
+            th #
+          each val, key in columns     
+            - var value=   val.default!=undefined?val.val:val   
+            th(scope='col') #{value}
+          if setting.actionButton != undefined
+            th(scope='col') Acciones
+
+  +config(setting,setting.settingDataTable,setting.actionButton)
+  block append head
+    link(rel='stylesheet', href='/css/dataTables.bootstrap4.min.css')
+    link(rel='stylesheet', href='/css/responsive.bootstrap4.min.css')
+  block append scripts
+    script(src='/js/jquery.dataTables.min.js')
+    script(src='/js/dataTables.bootstrap4.min.js')
+    script(src='/js/dataTables.responsive.min.js')
+    script(src='/js/responsive.bootstrap4.min.js')
+    

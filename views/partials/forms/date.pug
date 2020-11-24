@@ -1,0 +1,27 @@
+mixin date(setting,pAttributes)
+  - nameFieldPicker='datetimepicker_'+pAttributes.name
+  - var setDatatable=setting.defaultDate ==undefined?{defaultDate:new Date()}:{}
+  if setting.setDatatable == undefined
+    - setDatatable.format='DD/MM/YYYY'
+  else
+    if setting.setDatatable.format == undefined
+      - setDatatable.format='DD/MM/YYYY'
+  .input-group.date(id=nameFieldPicker)
+    input.form-control(type='text',id=pAttributes.name)&attributes(pAttributes)
+    .input-group-append
+      span.input-group-text
+        if setting.clock == undefined
+          span.far.fa-calendar-alt
+        else 
+          span.far.fa-clock
+    .invalid-feedback #{setting.validationMessage}
+  if setting.showHelp != undefined
+    span.badge.-pill.-dark #{setting.showHelp}
+  - var settingDatatable=Object.assign(setDatatable,setting.setDatatable!= undefined?setting.setDatatable:{})
+  script. 
+    $(function () {
+      $('##{nameFieldPicker}').datetimepicker(!{JSON.stringify(settingDatatable)});           
+    });
+  block append scripts
+    script(src='/assets/momentjs/moment.min.js')
+    script(src='/datetimepicker/js/bootstrap-datetimepicker.min.js')

@@ -1,0 +1,12 @@
+mixin rellena(object)
+  script.
+    var variable=!{JSON.stringify(object)}
+    for (const property in variable) {
+      var type = $(`#${property}`).attr('type');
+      if(type=='checkbox' && variable[property] ){
+         $(`#${property}`).attr('checked', true);  
+      }
+      console.log(type)
+      console.log(property+'+'+variable[property])
+      $(`#${property}`).val(variable[property]);
+    }
