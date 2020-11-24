@@ -113,7 +113,6 @@ var usersRoute = require('./routes/users.routes');
 var scheduleRoute = require('./routes/schedule.routes');
 var itemPriceRoute = require('./routes/item_price.routes');
 var alliedEntityRoute = require('./routes/allied_entity.routes');
-var seedRoute = require('./routes/seed.routes');
 var generalInformation = require('./routes/general_information.routes');
 var parameter = require('./routes/parameter.routes');
 app.use('/', indexRoute);
@@ -121,9 +120,12 @@ app.use('/users', usersRoute);
 app.use('/schedule', scheduleRoute);
 app.use('/item_price', itemPriceRoute);
 app.use('/allied_entity', alliedEntityRoute);
-app.use('/seeds', seedRoute);
 app.use('/general_information', generalInformation);
 app.use('/parameter', parameter);
+if (process.env.NODE_ENV=='devolopment') {
+  var seedRoute = require('./routes/seed.routes');
+  app.use('/seeds', seedRoute);  
+}
 
 
 //app.locals.currentUser = 42;
