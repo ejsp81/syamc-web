@@ -55,6 +55,9 @@ usersCtrl.renderIndex = async (req, res) => {
   } else {
     const { getByUId } = usersCtrl;
     rowData = await getByUId(req, res)
+    rowData.profile=rowData.customClaims.profile
+    rowData.idBD=rowData.customClaims.idBD
+    console.log(rowData)
     title = 'Formulario para modificar un usuario del sistema'
   }
   req.app.locals.urlReturn = '/users'
@@ -81,7 +84,6 @@ usersCtrl.getUsers = (req, res, next) => {
       //}
 
     });
-    console.log(usuarios)
     res.send(usuarios);
   }).catch((error) => console.log(error));
 

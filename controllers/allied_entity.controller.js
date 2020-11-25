@@ -76,7 +76,8 @@ alliedEntityCtrl.renderIndex = async (req, res) => {
         displayName: 'Nombre',
         email: 'Correo Electronico',
         disabled: 'Estado',
-        profile: 'Perfil'
+        profile: 'Perfil',
+        idBD:'Id Base de datos'
       }
       rowData.displayName = rowData.businessName
       title = 'Formulario para asignar usuario al aliado'

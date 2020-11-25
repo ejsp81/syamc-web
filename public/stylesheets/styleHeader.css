@@ -8,4 +8,4 @@ html, body { width: 100%; height: 99%;   }
   color: #f1211a; font-size: 14px;margin-left:7px
 }
 
-.portada{background-image: url("/images/fondo.jpg");background-repeat: no-repeat;background-size: cover;}
+.portada{background-image: url("/images/background_header.jpg");background-repeat: no-repeat;background-size: cover;}

@@ -1,10 +1,4 @@
 mixin datatable() 
-  script.
-    var succ={
-      success:function(data){
-          alert('Hola');
-      }
-    }
   -
     var settingDataTable={
       processing: true,
@@ -34,7 +28,7 @@ mixin datatable()
   include ../../partials/datatable/datatable
   +datatableglobal(
     {
-      tableName:'table'+nameTabla,
+      tableName:'table'+nameTable,
       settingDataTable:settingDataTable,
       titleDataTable:titleDataTable,
       initDatatable:false,
@@ -46,7 +40,7 @@ mixin datatable()
             searchable: false
           },
         ]
-      }
+      },
     },
     fieldAndTitle
   )

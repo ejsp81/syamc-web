@@ -38,7 +38,7 @@ scheduleCtrl.renderProgramSchedule = (req, res) => {
   };
   res.render("schedule/program/body", {
     title: "Citas CDA",
-    nameTabla: "Schedule",
+    nameTable: "Schedule",
     urlPage: utilfull.returnUrl(req.originalUrl),
   });
 };
@@ -70,7 +70,7 @@ scheduleCtrl.generateSchedule = async (req, res) => {
 
 
     if (query2.success) {
-      query2.data.forEach(function (doc) {
+      query2.data.forEach(function (doc) {        
         var data = doc.data();
         var date = moment(data.date.toDate()).format("DD/MM/YYYY");
         var hour = moment(data.date.toDate()).format("HH:mm");
@@ -87,19 +87,26 @@ scheduleCtrl.generateSchedule = async (req, res) => {
     var response = [];
 
     var array = JSON.parse(param.data);
-    array.forEach(function (elemento, indice, array) {
+    array.forEach(function (elemento) {
+      var date=moment(elemento.date,'DD/MM/YYYY').locale("es").format('dddd, DD MMM')
       if (appointmentAvailable[elemento.date] == undefined) {
         response.push({
-          date: elemento.date,
+          date: date,
           field: elemento.dailyAppointmentsButton,
-          data: elemento.dailyAppointmentsArray,
+          data: {
+            date:elemento.date,
+            data: elemento.dailyAppointmentsArray
+          },
           assign: true,
         });
       } else {
         response.push({
-          date: elemento.date,
+          date: date,
           field: appointmentAvailable[elemento.date],
-          data: elemento.dailyAppointmentsArray,
+          data: {
+            date:elemento.date,
+            data: elemento.dailyAppointmentsArray
+          },
           assign: false,
         });
       }
@@ -116,20 +123,23 @@ scheduleCtrl.saveSchedule = async (req, res) => {
   generalCrud = new GeneralCrud('schedule');
 
   req.body.data.forEach(function (elemento) {
-    var hours = elemento.data;
-    for (const key in hours) {
-      var objec = new Schedule({
-        date: moment(elemento.date + " " + hours[key], 'DD/MM/YYYY HH:mm'),
-        time: 45,
-        state: true,
-        inProgress: false,
-        alliedEntity: req.app.locals.documentRef,
-        typeOfVehicle: "",
-        inProgress: false,
-        idUserProgress: '',
-        obervation: '',
-        infoSchedule: {},
-      })
+    var hours = elemento.data.data;
+    var date=elemento.data.date
+    for (const key in hours) {  
+      if (hours[key]!=null) {
+        var objec = new Schedule({
+          date: moment(date + " " + hours[key], 'DD/MM/YYYY HH:mm'),
+          time: 45,
+          state: true,
+          inProgress: false,
+          alliedEntity: req.app.locals.documentRef,
+          typeOfVehicle: "",
+          inProgress: false,
+          idUserProgress: '',
+          obervation: '',
+          infoSchedule: {},
+        })        
+      }  
       generalCrud._createBatch(objec.toJSON());
       object=null
     }

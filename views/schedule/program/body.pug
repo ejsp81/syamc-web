@@ -39,11 +39,12 @@ block content
         var dias=lastDate.diff(firstDate, 'days')+1
         var dailyAppointmentsButton="";
         var dailyAppointmentsArray=[];
+        var idx=0
         $("select#selectBreak option").map(function() {  
           var breakVal= $('#selectBreak').val()
           var currentVal=$(this).val()
           if( currentVal!='?' && !breakVal.includes(currentVal) ){
-            dailyAppointmentsButton=dailyAppointmentsButton+`<button class='getName btn btn-info'>${currentVal}</button> `
+            dailyAppointmentsButton=dailyAppointmentsButton+`<button type="button" value=${idx++} class='appointment btn btn-primary btn-xs'>${currentVal}</button> `            
             dailyAppointmentsArray.push(currentVal)
           }          
         }).get();
@@ -139,6 +140,29 @@ block content
             return false; // For testing only to stay on this page
         });
       }); 
+      $('#table#{nameTable}').on('click', '.appointment', function () {
+        var state=$(this).hasClass("btn-primary").toString()
+        var rowSelector;
+        var li = $(this).closest('li');         
+        if ( li.length ) {
+          rowSelector = table.cell( li ).index().row;
+        }
+        else {
+          rowSelector =  $(this).closest('tr');
+        }
+        var data = table.row( rowSelector ).data();   
+        console.log(data)
+        var title=$(this).text();
+        var arr=data.data
+        var idx = $(this).val()
+        if(state=='true'){
+          $(this).removeClass( "btn-primary" ).addClass( "btn-danger" );
+          delete table.row(rowSelector).data().data.data[idx];          
+        }else{
+          $(this).removeClass( "btn-danger" ).addClass( "btn-primary" );
+          table.row(rowSelector).data().data.data[idx]=title;
+        }
+      });
       
     });
 

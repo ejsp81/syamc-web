@@ -86,7 +86,7 @@ exports.updateUser = async function (user) {
   })
     .then(async function  (userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
-      await admin.auth().setCustomUserClaims(user.uid, { profile: user.profile, idBD: user.uid }).then(() => {
+      await admin.auth().setCustomUserClaims(user.uid, { profile: user.profile, idBD: user.id }).then(() => {
         response = { success: true, data: userRecord.uid };
         console.log('Successfully updated user', userRecord.toJSON());
       });

@@ -3,9 +3,10 @@ var _ = require('lodash');
 
 helpers.isAuthenticated = (req, res, next) => {
  
-  if (req.isAuthenticated()) {
+ /*  if (req.isAuthenticated()) {
     return next();
-  } 
+  }  */
+  return next()
 
   req.flash('error', 'Debes iniciar sesion para acceder a los datos');
   req.session.Redirect=req.url

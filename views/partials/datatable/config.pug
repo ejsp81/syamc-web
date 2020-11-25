@@ -42,6 +42,9 @@ mixin config(setting,settingDataTable)
       "defaultContent":"<button class='btn btn-success editRow' style='margin-right:5px'>Editar</button> <button class='btn btn-danger deleteRow' data-toggle='modal' data-target='#modalDelete'>Eliminar</button>",
       "className": "justify-content-center text-center"
     }
+    var deleteRow={
+      "defaultContent":"<button class='btn btn-danger remove'><i class='fa fa-trash'></i></button>"
+    }
   if setting.rowCounter == true  
     - settingDataTable.columns =[{ data: null}].concat(settingDataTable.columns)
     if settingDataTable.columnDefs == undefined         
@@ -50,6 +53,8 @@ mixin config(setting,settingDataTable)
       - settingDataTable.columnDefs.push(rowCounter)
   if setting.actionButton != undefined
     - settingDataTable.columns.push(actionButton)
+  if setting.deleteRow != undefined
+    - settingDataTable.columns.splice(setting.deleteRow,0,deleteRow);
   if setting.initDatatable != undefined
     - initialize=false
     if setting.initDatatableSetting != undefined

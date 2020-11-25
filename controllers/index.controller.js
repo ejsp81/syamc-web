@@ -5,7 +5,7 @@ var _ = require('lodash');
 indexCtrl.renderIndex = (req, res) => {
   if (process.env.NODE_ENV =='development'){
     profile = require('../helpers/seeds/profile')
-    var rol='Aliado'
+    var rol='Administrador'
   } else {
     profile = req.app.locals.profile
     rol=req.app.locals.rol
