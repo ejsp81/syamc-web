@@ -122,7 +122,7 @@ app.use('/item_price', itemPriceRoute);
 app.use('/allied_entity', alliedEntityRoute);
 app.use('/general_information', generalInformation);
 app.use('/parameter', parameter);
-if (process.env.NODE_ENV=='devolopment') {
+if (process.env.NODE_ENV !='devolopment') {
   var seedRoute = require('./routes/seed.routes');
   app.use('/seeds', seedRoute);  
 }

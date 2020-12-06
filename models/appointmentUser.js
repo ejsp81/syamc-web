@@ -1,6 +1,6 @@
 var utilfull=require('../helpers/utilfull');
 module.exports = class AppointmentUser{
-constructor({id,user,schedule,state,observation,licencePlate,date,alliedEntity,}){
+constructor({id,user,schedule,state,observation,licencePlate,date,alliedEntity,documentReference,}){
 this.id=id;
 this.user=user;
 this.schedule=schedule;
@@ -9,6 +9,7 @@ this.observation=observation;
 this.licencePlate=licencePlate;
 this.date=date;
 this.alliedEntity=alliedEntity;
+this.documentReference=documentReference;
 }
 name(capital){
 return capital?"AppointmentUser":"appointmentUser"
@@ -22,6 +23,7 @@ observation:this.observation,
 licencePlate:this.licencePlate,
 date:utilfull.converDate(this.date),
 alliedEntity:this.alliedEntity,
+documentReference:this.documentReference,
 }
 }
 fieldAndTitle(){

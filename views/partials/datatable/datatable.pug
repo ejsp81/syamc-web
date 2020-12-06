@@ -1,5 +1,6 @@
 mixin datatableglobal(setting,columns)  
   include config
+  //Valida si las columnas se definieron en la configuracion
   if setting.settingDataTable.columns == undefined
     - setting.settingDataTable.columns=[]
     each val, key in columns 
@@ -16,6 +17,8 @@ mixin datatableglobal(setting,columns)
             th(scope='col') #{value}
           if setting.actionButton != undefined
             th(scope='col') Acciones
+          if setting.deleteRow != undefined
+            th Eliminar
       tbody 
       tfoot
         tr
@@ -26,6 +29,8 @@ mixin datatableglobal(setting,columns)
             th(scope='col') #{value}
           if setting.actionButton != undefined
             th(scope='col') Acciones
+          if setting.deleteRow != undefined
+            th Eliminar
 
   +config(setting,setting.settingDataTable,setting.actionButton)
   block append head

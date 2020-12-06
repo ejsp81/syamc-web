@@ -18,6 +18,15 @@ html
     link(rel="stylesheet" type="text/css" href="/stylesheets/styleHeader.css") 
     link(rel="stylesheet" href="/css/toastr.min.css") 
     block head
+    style.
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
+      }
   body
     //main.container.p-5
     block content 
@@ -27,4 +36,9 @@ html
     script(src='/js/toastr.min.js')  
     
     block scripts
+
+    hr
+    .footer.fixed-bottom.bg-danger
+      .container(align='center')
+        h4 Serivicio y Asistencia para Motos y Carros
       

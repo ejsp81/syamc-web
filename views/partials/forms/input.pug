@@ -7,7 +7,7 @@ mixin input(options,pAttributes)
     - options.validationMessage=""
   - var available=true
   - attributes.hide = options.hide
-  div(class=options.column?'col-'+options.column:'col-12')&attributes(attributes)    
+  div(class=options.column?'col-md-'+options.column:'col-md-12')&attributes(attributes)    
     .form-group
       if options.type == 'hidden'
         input.form-control(type=options.type)&attributes(pAttributes)

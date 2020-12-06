@@ -18,4 +18,6 @@ router.post('/generate',schedule_controller.generateSchedule)
 
 router.post('/save',schedule_controller.saveSchedule)
 
+router.post('/report',isAuthenticated,schedule_controller.appointmentReport)
+
 module.exports = router;

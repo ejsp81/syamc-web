@@ -1,10 +1,12 @@
+var utilfull=require('../helpers/utilfull');
 module.exports = class Traceability{
-constructor({id,idSchedule,idUser,state,obervation,}){
+constructor({id,idSchedule,idUser,state,obervation,date,}){
 this.id=id;
 this.idSchedule=idSchedule;
 this.idUser=idUser;
 this.state=state;
 this.obervation=obervation;
+this.date=date;
 }
 name(capital){
 return capital?"Traceability":"traceability"
@@ -15,6 +17,7 @@ idSchedule:this.idSchedule,
 idUser:this.idUser,
 state:this.state,
 obervation:this.obervation,
+date:utilfull.converDate(this.date),
 }
 }
 fieldAndTitle(){

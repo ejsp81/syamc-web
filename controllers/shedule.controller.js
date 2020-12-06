@@ -26,7 +26,16 @@ scheduleCtrl.getAppointment = (req, res) => {
 };
 
 scheduleCtrl.renderAppointment = (req, res) => {
-  res.render("schedule/appointment", { title: "Citas CDA" });
+  req.app.locals.fieldAndTitle = {
+    date: "Fecha",
+    nameUser: "Usuario",
+    licencePlate: "Placa",
+    urlLicencePlate: "Tarjeta de Propiedad",
+  };
+  res.render("schedule/report/appointment", {
+    title: "Citas CDA" ,
+    nameTable: "Report",
+    urlPage: utilfull.returnUrl(req.originalUrl)});
 };
 
 scheduleCtrl.renderProgramSchedule = (req, res) => {
@@ -74,7 +83,7 @@ scheduleCtrl.generateSchedule = async (req, res) => {
         var data = doc.data();
         var date = moment(data.date.toDate()).format("DD/MM/YYYY");
         var hour = moment(data.date.toDate()).format("HH:mm");
-        var appointment = `<button class="getName btn btn-danger" disabled>${hour}</button> `;
+        var appointment = `<button class="appointment btn btn-danger" disabled>${hour}</button> `;
         if (appointmentAvailable[date] == undefined) {
           appointmentAvailable[date] = appointment;
         } else {
@@ -150,6 +159,24 @@ scheduleCtrl.saveSchedule = async (req, res) => {
   } else {
 
   }
+};
+
+scheduleCtrl.appointmentReport=async (req, res) => { 
+  var schedule = []
+  const query = await generalCrud._getRowsByParam('state',false,'==')
+  if (query.success) {
+    query.data.forEach(doc => {
+      let document = doc.data()
+      let docum={}
+      docum.date= moment(document.date.toDate()).format('DD/MM/YYYY, h:mm a');
+      docum.nameUser=document.infoSchedule.nameUser
+      docum.licencePlate=document.infoSchedule.licencePlate
+      //docum.urlLicencePlate='url'
+      docum.urlLicencePlate=document.infoSchedule.urlLicencePlate
+      schedule.push(docum)
+    });  
+    res.send(schedule)  
+  }  
 };
 
 module.exports = scheduleCtrl;

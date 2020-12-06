@@ -66,7 +66,7 @@ exports.createUser = async function (user) {
     disabled: false,
   }).then(function (userRecord) {
     admin.auth().setCustomUserClaims(userRecord.uid, {
-      profile: user.profile, idBD: user.id
+      profile: user.profile, idBD: user.idBD
     }).then(() => {
       console.log('Rol asignado')
     })

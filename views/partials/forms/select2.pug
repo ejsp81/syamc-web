@@ -1,5 +1,6 @@
 mixin select(options,pAttributes)
-  select.form-control.full-width(id=pAttributes.name)&attributes(pAttributes)  
+  select.form-control.full-width(id=pAttributes.name)&attributes(pAttributes)
+    option
     if options.data != undefined
       each val, key in options.data
         option(value=key) #{val}
@@ -12,6 +13,7 @@ mixin select(options,pAttributes)
         theme: "bootstrap",
         closeOnSelect: true,
         placeholder: "Seleccione un Item",
+        allowClear: true,
         width: '100%'
       });
     });

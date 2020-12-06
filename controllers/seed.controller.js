@@ -82,8 +82,10 @@ seedController.getAll = async (req, res) => {
 };
 
 seedController.updateCollection = async (req, res) => {
-	var generalCrud = new GeneralCrud(req.body.table)
-  const query = await generalCrud._resetCollection(req.body.data)
+  var generalCrud = new GeneralCrud(req.body.table)
+  console.log(req.body)
+  var index=Number(req.body.index)
+  const query = await generalCrud._resetCollection(listSeed[index].data)
 }
 
 seedController.update = async (req, res) => {

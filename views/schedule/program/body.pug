@@ -43,7 +43,8 @@ block content
         $("select#selectBreak option").map(function() {  
           var breakVal= $('#selectBreak').val()
           var currentVal=$(this).val()
-          if( currentVal!='?' && !breakVal.includes(currentVal) ){
+          console.log(currentVal)
+          if( currentVal!='' && !breakVal.includes(currentVal) ){
             dailyAppointmentsButton=dailyAppointmentsButton+`<button type="button" value=${idx++} class='appointment btn btn-primary btn-xs'>${currentVal}</button> `            
             dailyAppointmentsArray.push(currentVal)
           }          

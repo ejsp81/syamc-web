@@ -11,18 +11,21 @@ class GeneralCrud {
 
   _createBatch(data) {
     console.log('create')
+    data.created = FieldValue.serverTimestamp();
     var newRef = db.collection(this.collection).doc();
     batch.create(newRef, data);
   }
 
   _setBatch(data) {
     console.log('set')
+    data.created = FieldValue.serverTimestamp();
     var newRef = db.collection(this.collection).doc();
     batch.set(newRef, data);
   }
 
   _updateBatch(documentRef, data) {
     console.log('update')
+    data.update = FieldValue.serverTimestamp();
     batch.update(documentRef, data);
   }
 

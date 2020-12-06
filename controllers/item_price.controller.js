@@ -7,9 +7,8 @@ var utilfull = require('../helpers/utilfull');
 const nameTabla=ItemPrice.prototype.name(true)
 
 itemPriceCtrl.index = (req, res) => {  
-  var except=new ItemPrice()
   req.app.locals.fieldAndTitle = utilfull.fieldAndTitle({
-     model: ItemPrice, except:Object.values(except)
+     model: ItemPrice
  })
   res.render('item_price/index', {
     title: 'Administrar Productos',

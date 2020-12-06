@@ -1,6 +1,6 @@
 var utilfull=require('../helpers/utilfull');
 module.exports = class Schedule{
-constructor({id,date,time,alliedEntity,state,typeOfVehicle,inProgress,idUserProgress,obervation,infoSchedule,documentReference,}){
+constructor({id,date,time,alliedEntity,state,typeOfVehicle,inProgress,idUserProgress,observation,infoSchedule,documentReference,}){
 this.id=id;
 this.date=date;
 this.time=time;
@@ -9,7 +9,7 @@ this.state=state;
 this.typeOfVehicle=typeOfVehicle;
 this.inProgress=inProgress;
 this.idUserProgress=idUserProgress;
-this.obervation=obervation;
+this.observation=observation;
 this.infoSchedule=infoSchedule;
 this.documentReference=documentReference;
 }
@@ -25,7 +25,7 @@ state:this.state,
 typeOfVehicle:this.typeOfVehicle,
 inProgress:this.inProgress,
 idUserProgress:this.idUserProgress,
-obervation:this.obervation,
+observation:this.observation,
 infoSchedule:this.infoSchedule,
 documentReference:this.documentReference,
 }

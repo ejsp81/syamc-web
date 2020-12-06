@@ -18,7 +18,7 @@ mixin date(setting,pAttributes)
   if setting.showHelp != undefined
     span.badge.-pill.-dark #{setting.showHelp}
   - var settingDatatable=Object.assign(setDatatable,setting.setDatatable!= undefined?setting.setDatatable:{})
-  script. 
+  script.
     $(function () {
       $('##{nameFieldPicker}').datetimepicker(!{JSON.stringify(settingDatatable)});           
     });

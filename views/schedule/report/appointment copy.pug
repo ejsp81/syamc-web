@@ -1,7 +1,7 @@
-extends ../layout
+extends ../../layout
 
 block content
-  include ../partials/menu
+  include ../../partials/menu
   
   .container#containerTabla
     br
@@ -25,7 +25,7 @@ block content
             </tr>`);
         }
         function getData(){
-          $.post('/schedule/getAppointment', (data) => {
+          $.post('/schedule/report', (data) => {
             if(data.length==0){
               $('#containerTabla').append('No hay citas agendadas')
             }else{
@@ -34,7 +34,4 @@ block content
           });
         }  
 
-  hr
-  footer
-    .container(align='center')
-      | Serivicio y Asistencia para Motos y Carros
+  
