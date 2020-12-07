@@ -2,7 +2,6 @@
 /helpers/seeds
 /views/codigos_consulta
 /config/optional_configuration
-/controllers/seed.controllers.js
+/controllers/seed.controller.js
 /routes/seed.routes.js
 .env
-/provider
