@@ -3,3 +3,5 @@
 /helpers/seeds
 /views/codigos consulta
 /config/optional_configuration
+/controllers/seed.controller.js
+/routes/seed.routes.js
