@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV == 'development') {
   require('dotenv').config()
 }
 //const flash = require('connect-flash');
@@ -122,7 +122,7 @@ app.use('/item_price', itemPriceRoute);
 app.use('/allied_entity', alliedEntityRoute);
 app.use('/general_information', generalInformation);
 app.use('/parameter', parameter);
-if (process.env.NODE_ENV !='devolopment') {
+if (process.env.NODE_ENV =='development') {
   var seedRoute = require('./routes/seed.routes');
   app.use('/seeds', seedRoute);  
 }
