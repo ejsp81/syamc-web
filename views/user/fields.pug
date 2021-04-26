@@ -8,7 +8,7 @@ include ../helper/rellena
     +input({type:'email',label:'Correo Electronico',hide:'',column:'6'},{name:'email',placeholder:'Email',id:'email',required:''})    
   .form-row
     +input({type:'select',label:true,column:'6',data:{Administrador:'Administrador',Aliado:'Aliado',Aliado_cita:'Aliado_cita'}},{name:'profile',id:'profile',required:'','data-placeholder':'Seleccione un Item'})
-    +input({type:'text',label:'Id Base de Datos',column:'6'},{name:'idBD',placeholder:'Identificacion en la Base de Datos',id:'idBD'})
+    +input({type:'text',label:'Id Base de Datos',column:'6'},{name:'id',placeholder:'Identificacion en la Base de Datos',id:'id'})
     
   - var buttonClass=['btn-lg', 'btn-primary', 'text-center'];
   - var titleButton=typeof(rowData) != 'undefined'?'Actualizar':'Registrar'

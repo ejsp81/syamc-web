@@ -6,6 +6,7 @@ mixin rellena(object)
       if(type=='checkbox' && variable[property] ){
          $(`#${property}`).attr('checked', true);  
       }
+      console.log('******************************************')
       console.log(type)
       console.log(property+'+'+variable[property])
       $(`#${property}`).val(variable[property]);

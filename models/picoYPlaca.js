@@ -1,14 +1,16 @@
 var utilfull=require('../helpers/utilfull');
 module.exports = class PicoYPlaca{
-constructor({id,city,beginningOfValidity,endOfValidity,weekDay,digits,schedule,observation,}){
+constructor({id,city,beginningOfValidity,endOfValidity,information,urlCity,schedule,observation,generalObservation,decree,}){
 this.id=id;
 this.city=city;
 this.beginningOfValidity=beginningOfValidity;
 this.endOfValidity=endOfValidity;
-this.weekDay=weekDay;
-this.digits=digits;
+this.information=information;
+this.urlCity=urlCity;
 this.schedule=schedule;
 this.observation=observation;
+this.generalObservation=generalObservation;
+this.decree=decree;
 }
 name(capital){
 return capital?"PicoYPlaca":"picoYPlaca"
@@ -18,10 +20,12 @@ return {
 city:this.city,
 beginningOfValidity:utilfull.converDate(this.beginningOfValidity),
 endOfValidity:utilfull.converDate(this.endOfValidity),
-weekDay:this.weekDay,
-digits:utilfull.converArray(this.digits),
+information:this.information,
+urlCity:this.urlCity,
 schedule:utilfull.converArray(this.schedule),
 observation:this.observation,
+generalObservation:this.generalObservation,
+decree:this.decree,
 }
 }
 fieldAndTitle(){
@@ -29,10 +33,11 @@ return {
 city:"Ciudad",
 beginningOfValidity:"Inicio de Vigencia",
 endOfValidity:"Fin de Vigencia",
-weekDay:"Dia Semana",
-digits:"Digitos",
+information:"Dia Semana",
+urlCity:"Digitos",
 schedule:"Horario",
 observation:"Observacion",
+generalObservation:"observacion General",
 }
 }
 toJSON(includeUndefined) {

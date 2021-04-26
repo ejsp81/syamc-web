@@ -1,9 +1,10 @@
 var utilfull=require('../helpers/utilfull');
 module.exports = class Vehicle{
-constructor({id,licencePlate,vehicleType,urlProtertyCard,urlSoat,vehicleModel,validitySOAT,validityTecno,lastOilChange,dataLicencePlate,}){
+constructor({id,licencePlate,vehicleType,vehicleLine,urlProtertyCard,urlSoat,vehicleModel,validitySOAT,validityTecno,lastOilChange,dataLicencePlate,}){
 this.id=id;
 this.licencePlate=licencePlate;
 this.vehicleType=vehicleType;
+this.vehicleLine=vehicleLine;
 this.urlProtertyCard=urlProtertyCard;
 this.urlSoat=urlSoat;
 this.vehicleModel=vehicleModel;
@@ -19,6 +20,7 @@ modelObject(){
 return {
 licencePlate:this.licencePlate,
 vehicleType:this.vehicleType,
+vehicleLine:this.vehicleLine,
 urlProtertyCard:this.urlProtertyCard,
 urlSoat:this.urlSoat,
 vehicleModel:this.vehicleModel,

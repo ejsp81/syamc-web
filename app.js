@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-if (process.env.NODE_ENV == 'development') {
+require('dotenv').config()
+if (process.env.NODE_ENV === 'development') {
   require('dotenv').config()
 }
 //const flash = require('connect-flash');
@@ -35,7 +36,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 300000 }
+  cookie: { maxAge: 900000 }
 }));
 
 

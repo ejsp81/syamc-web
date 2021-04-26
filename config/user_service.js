@@ -58,6 +58,8 @@ exports.getUserByUid = async function (uid) {
 
 exports.createUser = async function (user) {
   var response = {}
+  console.log('_______________________________________',user)
+  console.log(user)
   await admin.auth().createUser({
     email: user.email,
     emailVerified: true,
@@ -66,7 +68,7 @@ exports.createUser = async function (user) {
     disabled: false,
   }).then(function (userRecord) {
     admin.auth().setCustomUserClaims(userRecord.uid, {
-      profile: user.profile, idBD: user.idBD
+      profile: user.profile, idBD: user.id
     }).then(() => {
       console.log('Rol asignado')
     })
@@ -86,8 +88,9 @@ exports.updateUser = async function (user) {
   })
     .then(async function  (userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
-      await admin.auth().setCustomUserClaims(user.uid, { profile: user.profile, idBD: user.id }).then(() => {
+      await admin.auth().setCustomUserClaims(user.uid, { profile: user.profile, idBD: user.id }).then((resultado) => {
         response = { success: true, data: userRecord.uid };
+        console.log('Hola si se actualizío' , resultado)
         console.log('Successfully updated user', userRecord.toJSON());
       });
 

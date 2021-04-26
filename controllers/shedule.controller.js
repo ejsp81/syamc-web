@@ -58,6 +58,8 @@ scheduleCtrl.generateSchedule = async (req, res) => {
   var f = moment(param.lastDate + " " + '23:59', 'DD/MM/YYYY HH:mm')
   var appointmentAvailable = {};
   generalCrud = new GeneralCrud("alliedEntity");
+  console.log('...................................94797979')
+  console.log(req.app.locals.currentUser)
   const query = await generalCrud._getById(req.app.locals.currentUser.idBD);
   var validateRange = moment(new Date(param.lastDate)).format('DD/MM/YYYY') == moment(new Date(param.firstDate)).format('DD/MM/YYYY')
   if (query.success) {

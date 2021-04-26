@@ -42,6 +42,7 @@ alliedEntityCtrl.renderIndex = async (req, res) => {
   const { view } = req.params
   var title = 'Pagina no Encontrada'
   console.log(req.app.locals.businessActivity)
+  console.log('Hola como te va')
   var rowData
   if (typeof req.app.locals.businessActivity == 'undefined') {
     var generalCrud = new GeneralCrud('parametersApp')
@@ -84,6 +85,8 @@ alliedEntityCtrl.renderIndex = async (req, res) => {
       req.app.locals.urlReturn = '/allied_entity'
     }
   }
+  console.log('33333333333333333333333333......')
+  console.log(rowData)
   res.render('allied_entity/index', { title, view, rowData, urlPage: utilfull.returnUrl(req.originalUrl), nameTabla });
 };
 

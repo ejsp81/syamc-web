@@ -100,7 +100,9 @@ usersCtrl.createAllied = async (req, res) => {
       case 'auth/user-not-found':
         var newUser = await userService.createUser(req.body)
         if (newUser.success) {
-          const query = await generalCrud._updateById(req.body.uid, {
+          console.log('====================================')
+          console.log(newUser)
+          const query = await generalCrud._updateById(req.body.id, {
             userAccount: true
           })
           req.flash('success', 'Aliado credo satisfactoriamente')
